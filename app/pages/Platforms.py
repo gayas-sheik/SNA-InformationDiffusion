@@ -82,6 +82,7 @@ with c3:
         "20"
     )
 
+
 st.info(
     """
     Cross-platform diffusion occurs in 1,729 of the 1,876 analyzed
@@ -118,6 +119,7 @@ matrix_display = matrix_display.loc[
         if not c.lower().startswith("unnamed")
     ]
 ]
+
 
 st.dataframe(
     matrix_display,
@@ -211,6 +213,14 @@ if not transitions.empty:
         ]
     ]
 
+    # If the expected columns exist, sort by event count.
+    if "cross_platform_events" in transition_display.columns:
+
+        transition_display = transition_display.sort_values(
+            "cross_platform_events",
+            ascending=False
+        )
+
     st.dataframe(
         transition_display.head(20),
         use_container_width=True,
@@ -224,58 +234,60 @@ if not transitions.empty:
 
 if not transitions.empty:
 
-    # Identify likely transition/value columns
-    transition_column = None
-    count_column = None
-
-    for column in transitions.columns:
-
-        lower = column.lower()
-
-        if (
-            transition_column is None
-            and (
-                "transition" in lower
-                or "path" in lower
-                or "route" in lower
-            )
-        ):
-            transition_column = column
-
-        if (
-            count_column is None
-            and (
-                "count" in lower
-                or "events" in lower
-                or "frequency" in lower
-            )
-        ):
-            count_column = column
-
-    if transition_column and count_column:
+    # Use the actual Phase 4 schema when available.
+    if all(
+        column in transitions.columns
+        for column in [
+            "source_platform",
+            "target_platform",
+            "cross_platform_events"
+        ]
+    ):
 
         chart_data = (
-            transitions
+            transitions[
+                [
+                    "source_platform",
+                    "target_platform",
+                    "cross_platform_events"
+                ]
+            ]
+            .copy()
+        )
+
+        chart_data["transition"] = (
+            chart_data["source_platform"]
+            + " → "
+            + chart_data["target_platform"]
+        )
+
+        chart_data = (
+            chart_data
             .sort_values(
-                count_column,
+                "cross_platform_events",
                 ascending=False
             )
             .head(10)
             .sort_values(
-                count_column
+                "cross_platform_events"
             )
         )
 
         fig = px.bar(
             chart_data,
-            x=count_column,
-            y=transition_column,
+            x="cross_platform_events",
+            y="transition",
             orientation="h",
+            text="cross_platform_events",
             title="Top 10 Cross-Platform Diffusion Pathways",
             labels={
-                transition_column: "Platform Transition",
-                count_column: "Propagation Events"
+                "transition": "Platform Transition",
+                "cross_platform_events": "Propagation Events"
             }
+        )
+
+        fig.update_traces(
+            textposition="outside"
         )
 
         fig.update_layout(
@@ -307,6 +319,7 @@ activity = activity.loc[
     ]
 ]
 
+
 # Detect month/date column
 date_column = None
 
@@ -319,6 +332,7 @@ for column in activity.columns:
         or "date" in lower
         or "time" in lower
     ):
+
         date_column = column
         break
 
@@ -381,45 +395,141 @@ st.markdown(
 )
 
 
-# ------------------------------------------------------------
-# Outgoing transitions
-# ------------------------------------------------------------
+# ============================================================
+# OUTGOING TRANSITIONS
+# ============================================================
 
 st.markdown("#### Outgoing Diffusion")
 
 if not transitions.empty:
 
-    transition_text_columns = [
-        c for c in transitions.columns
-        if transitions[c].dtype == "object"
+    required_columns = [
+        "source_platform",
+        "target_platform",
+        "cross_platform_events"
     ]
 
-    if transition_text_columns:
-
-        possible_transition_column = transition_text_columns[0]
+    if all(
+        column in transitions.columns
+        for column in required_columns
+    ):
 
         outgoing = transitions[
-            transitions[possible_transition_column]
-            .astype(str)
-            .str.startswith(
-                selected_platform,
-                na=False
-            )
+            transitions["source_platform"]
+            == selected_platform
+        ].copy()
+
+        # Remove self-transitions if any exist.
+        outgoing = outgoing[
+            outgoing["target_platform"]
+            != selected_platform
         ]
+
+        outgoing = outgoing.sort_values(
+            "cross_platform_events",
+            ascending=False
+        )
 
         if not outgoing.empty:
 
+            total_outgoing = int(
+                outgoing["cross_platform_events"].sum()
+            )
+
+            top_destination = (
+                outgoing.iloc[0]["target_platform"]
+            )
+
+            top_count = int(
+                outgoing.iloc[0]["cross_platform_events"]
+            )
+
+            c1, c2, c3 = st.columns(3)
+
+            with c1:
+
+                st.metric(
+                    "Outgoing Cross-Platform Events",
+                    f"{total_outgoing:,}"
+                )
+
+            with c2:
+
+                st.metric(
+                    "Top Destination",
+                    top_destination
+                )
+
+            with c3:
+
+                st.metric(
+                    "Top Destination Events",
+                    f"{top_count:,}"
+                )
+
+
+            # --------------------------------------------
+            # Outgoing diffusion chart
+            # --------------------------------------------
+
+            fig = px.bar(
+                outgoing,
+                x="target_platform",
+                y="cross_platform_events",
+                text="cross_platform_events",
+                title=f"{selected_platform} → Other Platforms",
+                labels={
+                    "target_platform": "Target Platform",
+                    "cross_platform_events":
+                        "Propagation Events"
+                }
+            )
+
+            fig.update_traces(
+                textposition="outside"
+            )
+
+            fig.update_layout(
+                height=450,
+                template="plotly_white"
+            )
+
+            st.plotly_chart(
+                fig,
+                use_container_width=True
+            )
+
+
+            # --------------------------------------------
+            # Detailed outgoing table
+            # --------------------------------------------
+
             st.dataframe(
-                outgoing.head(10),
+                outgoing[
+                    [
+                        "source_platform",
+                        "target_platform",
+                        "cross_platform_events"
+                    ]
+                ],
                 use_container_width=True,
                 hide_index=True
             )
 
         else:
 
-            st.caption(
-                "No outgoing transition records found."
+            st.info(
+                f"No outgoing cross-platform diffusion was found "
+                f"for {selected_platform}."
             )
+
+    else:
+
+        st.error(
+            "The platform transition result file does not contain "
+            "the expected columns: source_platform, "
+            "target_platform, cross_platform_events."
+        )
 
 
 # ============================================================

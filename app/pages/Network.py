@@ -31,8 +31,10 @@ network_summary = pd.read_csv(
     RESULTS_DIR / "network_summary.csv"
 )
 
+# Use Phase 2 centrality results because they contain
+# both normal and propagation degree measures.
 degree_data = pd.read_csv(
-    RESULTS_DIR / "user_degree_centrality.csv"
+    RESULTS_DIR / "centrality_analysis.csv"
 )
 
 
@@ -256,7 +258,7 @@ if network_type == "Full Interaction Network":
         "in_degree",
         "out_degree",
         "user_type",
-        "influence"
+        "influence_score"
     ]
 
     available_columns = [
@@ -266,7 +268,10 @@ if network_type == "Full Interaction Network":
 
     top_users = (
         degree_data
-        .sort_values("in_degree", ascending=False)
+        .sort_values(
+            "in_degree",
+            ascending=False
+        )
         .head(10)
     )
 
@@ -285,7 +290,7 @@ else:
             "propagation_in_degree",
             "propagation_out_degree",
             "user_type",
-            "influence"
+            "influence_score"
         ]
 
         available_columns = [
@@ -306,6 +311,13 @@ else:
             top_users[available_columns],
             use_container_width=True,
             hide_index=True
+        )
+
+    else:
+
+        st.warning(
+            "The propagation degree columns were not found "
+            "in the centrality analysis result."
         )
 
 
