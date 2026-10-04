@@ -1,0 +1,47 @@
+PHASE 6 — INTEGRATED ANALYSIS & FINDINGS
+======================================================================
+
+Research Question:
+How does information spread across social networks, and what factors determine how far, how fast, and through whom it spreads?
+
+======================================================================
+
+Finding 1 — Network Structure
+The interaction network contains approximately 10,000 users connected through 48,463 unique interaction edges. The network is sparse, with a density of approximately 0.000485. Despite this sparsity, the largest weakly connected component contains approximately 9,421 users, indicating that most users belong to one large connected region of the interaction network.
+
+Finding 2 — User Influence
+Influence differs substantially across user types. The user type with the highest mean influence score is Influential, with an average influence of 0.805. The same type has a mean activity score of 0.778.
+
+Finding 3 — Centrality and Influence
+User influence is positively associated with multiple network-centrality measures. The strongest meaningful observed relationship is between influence score and PageRank, with a correlation of 0.7014. This suggests that users occupying structurally important positions in the synthetic network tend to have higher influence scores.
+
+Finding 4 — Information Cascades
+The analysis identifies 1,876 information cascades. The average cascade contains 26.65 interactions, with a median of 28 and a maximum of 75. The average cascade depth is 26.65, while the deepest cascade reaches 75 levels. Average cascade duration is approximately 249.55 hours.
+
+Finding 5 — Cross-Platform Diffusion
+Cross-platform diffusion is widespread in the synthetic network. 1,729 of 1,876 cascades involved cross-platform propagation (92.16%). These cascades had an average size of 27.54 interactions, compared with 16.26 interactions for cascades without cross-platform diffusion. The platform transition results show that information can propagate across all five platforms.
+
+Finding 6 — Cross-Community Diffusion
+Cross-community diffusion is also extensive. 1,822 of 1,876 cascades involved multiple communities (97.12%). These cascades had an average size of 27.13 interactions, compared with 10.63 interactions for cascades without cross-community diffusion. This shows that simulated information propagation is not restricted to a single community.
+
+Finding 7 — Temporal Activity
+Interaction activity varies across the six-month period. The highest monthly activity occurs in 2026-06, with 9,463 interactions, while the lowest occurs in 2026-01, with 6,570 interactions.
+
+Finding 8 — Daily Activity Pattern
+The highest simulated interaction activity occurs at hour 23:00, with approximately 2,568 interactions.
+
+Finding 9 — Weekly Activity Pattern
+Tuesday has the highest simulated interaction volume, with 8,564 interactions.
+
+Finding 10 — Propagation Rate
+The monthly propagation rate remains relatively stable across the observation period, averaging 41.83%. The highest monthly rate is 43.49% in 2026-05.
+
+Finding 11 — Overall Diffusion Pattern
+The combined results indicate that information propagation in the synthetic social network is shaped by several interacting dimensions: network connectivity, user influence, temporal activity, cross-platform movement, and cross-community movement. Highly connected and influential users occupy important structural positions, while information cascades frequently cross platform and community boundaries.
+
+Finding 12 — Dataset and Modeling Limitation
+The dataset is a controlled synthetic dataset designed to model information-diffusion mechanisms. Therefore, the findings should be interpreted as structural and simulation-based observations rather than direct claims about real-world social-media behavior. In particular, the generated cascades are predominantly chain-like, which limits interpretation of branching cascade topology.
+
+======================================================================
+END OF INTEGRATED FINDINGS
+======================================================================

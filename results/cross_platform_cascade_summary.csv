@@ -1,0 +1,3 @@
+cross_platform,cascade_count,cascade_size,cascade_depth,duration_hours,unique_users,unique_platforms,unique_communities,cross_platform_events
+False,147,16.259,16.259,144.236,16.374,1.007,3.633,0.0
+True,1729,27.536,27.536,258.499,27.775,3.515,6.247,4.551

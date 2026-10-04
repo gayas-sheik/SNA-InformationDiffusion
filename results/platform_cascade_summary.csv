@@ -1,0 +1,6 @@
+source_platform,cascade_count,cascade_size,cascade_depth,duration_hours,unique_users,unique_platforms,unique_communities,cross_platform_events,cross_community_events
+Facebook,357,26.863,26.863,260.442,27.003,3.249,5.706,3.905,5.378
+Instagram,468,26.825,26.825,240.991,27.062,3.363,6.09,4.314,5.923
+Reddit,303,26.488,26.488,255.105,26.716,3.3,6.271,4.109,6.304
+X,403,26.789,26.789,254.636,27.104,3.37,6.035,4.32,5.844
+YouTube,345,26.186,26.186,239.044,26.397,3.284,6.133,4.261,6.049

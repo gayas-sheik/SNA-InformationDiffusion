@@ -1,0 +1,38 @@
+category,metric,value
+Network Structure,Network nodes,10000
+Network Structure,Network edges,48463
+Network Structure,Network density,0.00048468
+Network Structure,Weakly connected components,580
+Network Structure,Largest connected component,9421
+Influence,Highest mean influence user type,Influential
+Influence,Highest mean influence score,0.804967
+Influence,Highest influence type mean activity,0.777845
+Centrality,Strongest influence-centrality relationship,PageRank
+Centrality,Strongest correlation,0.7013689103878447
+Diffusion,Number of cascades,1876
+Diffusion,Mean cascade size,26.652452025586353
+Diffusion,Median cascade size,28.0
+Diffusion,Maximum cascade size,75
+Diffusion,Mean cascade depth,26.652452025586353
+Diffusion,Maximum cascade depth,75
+Diffusion,Mean cascade duration hours,249.5454561734072
+Diffusion,Maximum cascade duration hours,871.2633822927778
+Cross-Platform,Cross-platform cascades,1729
+Cross-Platform,Cross-platform cascade percentage,92.16417910447761
+Cross-Platform,Mean size of cross-platform cascades,27.536
+Cross-Platform,Mean size of non-cross-platform cascades,16.259
+Cross-Community,Cross-community cascades,1822
+Cross-Community,Cross-community cascade percentage,97.12153518123668
+Cross-Community,Mean size of cross-community cascades,27.127
+Cross-Community,Mean size of non-cross-community cascades,10.63
+Temporal,Most active month,2026-06
+Temporal,Most active month interactions,9463
+Temporal,Least active month,2026-01
+Temporal,Least active month interactions,6570
+Temporal,Peak activity hour,23
+Temporal,Peak hour interactions,2568
+Temporal,Peak weekday,Tuesday
+Temporal,Peak weekday interactions,8564
+Propagation,Mean propagation rate,0.41828077782811546
+Propagation,Peak propagation rate,0.4349185808260541
+Propagation,Peak propagation month,2026-05
